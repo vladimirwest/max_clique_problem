@@ -17,7 +17,12 @@ keller5|
 MANN_a27|
 MANN_a45|
 
+
+# Cplex solution
+(instances are restricted by community version of cplex, count more later on another machine)
+
 Instance|Time (ms)
+---|---|
 C125.9| 9686
 MANN_a9| 1615
 hamming6-2| ~0 (initial optimal value found by cplex is already integer)
