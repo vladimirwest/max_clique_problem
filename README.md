@@ -5,7 +5,6 @@ Instance|Time (s)
 brock200_2|1743
 brock200_3|10560
 brock200_4|
-C125.9|
 keller4|5460
 MANN_a9|156
 hamming6-2.clq|5
@@ -14,6 +13,7 @@ johnson8-2-4.clq|0.5
 johnson8-4-4.clq|54
 johnson16-2-4.clq|8105
 p_hat300-1.clq|1084
+p_hat500-1.clq|12420
 
 # Cplex solution
 
