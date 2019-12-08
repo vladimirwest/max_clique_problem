@@ -10,6 +10,11 @@ gen200_p0.9_44|
 gen200_p0.9_55|
 keller4|5460
 MANN_a9|156
+hamming6-2.clq|5
+hamming6-4.clq|2
+johnson8-2-4.clq|0.5
+johnson8-4-4.clq|54
+
 
 
 # Cplex solution
