@@ -1,8 +1,8 @@
 # max_clique_problem
 
-Instance|Time (ms)
+Instance|Time (s)
 ---|---|
-brock200_2|
+brock200_2|1743
 brock200_4|
 brock400_2|
 brock400_4|
