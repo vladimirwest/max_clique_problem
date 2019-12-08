@@ -3,7 +3,7 @@
 Instance|Time (s)
 ---|---|
 brock200_2|1743
-brock200_3|
+brock200_3|10560
 brock200_4|
 C125.9|
 gen200_p0.9_44|
