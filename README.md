@@ -14,7 +14,7 @@ gen400_p0.9_65|
 gen400_p0.9_75|
 keller4|
 keller5|
-MANN_a9|156 000
+MANN_a9|156
 MANN_a27|
 MANN_a45|
 
