@@ -13,7 +13,7 @@ hamming6-4.clq|2
 johnson8-2-4.clq|0.5
 johnson8-4-4.clq|54
 johnson16-2-4.clq|8105
-
+p_hat300-1.clq|1084
 
 # Cplex solution
 
