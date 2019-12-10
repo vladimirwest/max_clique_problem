@@ -4,7 +4,7 @@ Instance|Time (s)
 ---|---|
 brock200_2|1743
 brock200_3|10560
-brock200_4|
+brock200_4|43200
 keller4|5460
 MANN_a9|156
 hamming6-2.clq|5
