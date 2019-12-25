@@ -5,7 +5,7 @@ from numba import *
 from tqdm import tqdm
 from datetime import datetime
 import time
-import utils as utils
+#import utils as utils
 import argparse
 import numpy as np
 import numba
@@ -80,9 +80,9 @@ class Node():
         self.ub = ub
         self.clique = clique
 
-    def solve(self, best_known_solution):
+    def solve(self, best_known_solution, best_known_clique):
         if self.ub <= best_known_solution:
-            return best_known_solution
+            return best_known_solution, best_known_clique
         if self.fix_vertex:
             self.candidate_graph = get_neighbours_graph(self.candidate_graph, self.fix_vertex)
         if self.parent:
@@ -94,16 +94,18 @@ class Node():
         if len(self.candidate_graph.nodes) == 0:
             if len(self.clique) > best_known_solution:
                 print('Found better solution:', len(self.clique))
+                print(self.clique)
+                best_known_clique = self.clique
                 best_known_solution = len(self.clique)
-                return best_known_solution
+                return best_known_solution, best_known_clique
             else:
-                return best_known_solution
+                return best_known_solution, best_known_clique
         self.color_num, color_map = greedy_coloring_heuristic(self.candidate_graph)
 
         self.ub = (len(self.clique) + self.color_num)
 
         if self.ub <= best_known_solution:
-            return best_known_solution
+            return best_known_solution, best_known_clique
         sorted_colors = get_sorted_colors(color_map)
         children = []
         for i in sorted_colors:
@@ -119,29 +121,30 @@ class Node():
                     self.children.append(Node(parent = self, fix_vertex = node, candidate_graph = self.candidate_graph, ub = self.ub - 1, clique = self.clique + [node]))
                 else:
                     self.children.append(Node(parent = self, fix_vertex = node, candidate_graph = self.candidate_graph, ub = self.ub, clique = self.clique + [node]))
-        return best_known_solution
+        return best_known_solution, best_known_clique
 
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--graph',  type=str, default = 'p')
-    args = parser.parse_args()
-    if args.graph == 'play':
-        graph, n = read_networkx_graph('./instances/playground.clq')
-    elif args.graph == 'MANN_a9':
-        graph, n = read_networkx_graph('./instances/MANN_a9.clq')
-    elif args.graph == 'keller4':
-        graph, n = read_networkx_graph('./instances/keller4.clq')
-    elif args.graph == 'hamming6':
-        graph, n = read_networkx_graph('./instances/hamming6-2.clq')
-    elif args.graph == 'brock200_1':
-        graph, n = read_networkx_graph('./instances/brock200_1.clq')
+#    parser = argparse.ArgumentParser()
+#    parser.add_argument('--graph',  type=str, default = 'p')
+#    args = parser.parse_args()
+#    if args.graph == 'play':
+#        graph, n = read_networkx_graph('./instances/playground.clq')
+#    elif args.graph == 'MANN_a9':
+    graph, n = read_networkx_graph('D:/max_clique_problem/instances/johnson16-2-4.clq')
+#    elif args.graph == 'keller4':
+#        graph, n = read_networkx_graph('./instances/keller4.clq')
+#    elif args.graph == 'hamming6':
+#        graph, n = read_networkx_graph('./instances/hamming6-2.clq')
+#    elif args.graph == 'brock200_1':
+#        graph, n = read_networkx_graph('./instances/brock200_1.clq')
 
     n = int(n)
     best_known_solution = 0
+    best_known_clique = []
     parent_node = Node(parent = None, fix_vertex = None, candidate_graph = graph, ub = n, clique = [])
-    parent_node.solve(best_known_solution)
+    parent_node.solve(best_known_solution, best_known_clique)
 
     first_layer_size = len(parent_node.children)
     current_progress = 1 - len(parent_node.children)/first_layer_size
@@ -155,12 +158,14 @@ if __name__ == '__main__':
     while len(parent_node.children) != 0:
         while(len(node.children) != 0): #go down one branch
             node = node.children[0]
-            best_known_solution = node.solve(best_known_solution)
+            best_known_solution, best_known_clique = node.solve(best_known_solution, best_known_clique)
             depth += 1
         if best_known_solution < len(node.clique):
             best_known_solution = len(node.clique)
-            print(colored((node.children, node.clique) ,'yellow'))
+            best_known_clique = (node.children, node.clique)
+            #print(colored((node.children, node.clique) ,'yellow'))
             print('Found better', best_known_solution)
+            print(best_known_clique)
         if depth > max_depth:
             max_depth = depth
 
